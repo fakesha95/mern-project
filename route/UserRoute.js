@@ -1,6 +1,7 @@
 const express=require('express');
 const router=express.Router();
 const User=require("../models/userSchema");
+const bcrypt=require('bcryptjs');
 
 router.get('/',(req,res)=>{
     res.send('hello route')
@@ -19,6 +20,9 @@ router.post("/signup",async (req,res)=>{
             return res.status(422).json({error:"user already exist"})
         }else{
             const user= new User ({email,phone,password})
+
+            const salt=await bcrypt.genSalt(10);
+            user.password=await bcrypt.hash(user.password,salt)
         
             const newUser=await user.save();
             
