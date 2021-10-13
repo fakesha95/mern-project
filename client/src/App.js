@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{createContext} from 'react';
 import Navbar from './components/Navbar';
 import {Route,Switch} from 'react-router-dom'
 import Signup from './components/Signup';
@@ -7,12 +7,19 @@ import Home from './components/Home';
 import Contact from './components/Contact';
 import About from './components/About';
 import Error from './components/Error';
+import Userpost from './components/Userpost';
+import Logout from './components/Logout';
+import Protected from './components/Protected';
 
 const App = () => {
+
+//    export const UserContext = createContext();
+
+
   return (
     <>
-      <Navbar/>
-
+    {/* <UserContext.Provider> */}
+    <Navbar/>
       <Switch>
 
       <Route exact path="/">
@@ -20,11 +27,13 @@ const App = () => {
       </Route>
 
       <Route path="/about">
-          <About/>
+          {/* <About/> */}
+          <Protected Cmp={About}/>
       </Route>
 
       <Route path="/contact">
-          <Contact/>
+          {/* <Contact/> */}
+          <Protected Cmp={Contact}/>
       </Route>
 
       <Route path="/signup">
@@ -35,14 +44,22 @@ const App = () => {
           <Login/>
       </Route>
 
+      <Route path="/post">
+          <Userpost/>
+      </Route>
+
+      <Route path="/logout">
+          <Logout/>
+      </Route>
+
       <Route>
           <Error/>
       </Route>
     
-    </Switch>
-  
+        </Switch>
+    {/* </UserContext.Provider> */}
     </>
   ) 
 }
 
-export default App
+export default App;
